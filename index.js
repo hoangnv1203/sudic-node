@@ -5,13 +5,13 @@ import drive from 'services/amqp'
 import blockchain from 'modules/blockchain'
 
 drive.connect().then((ch) => {
-  drive.publish(config.channel.reqCreateWallet, new Buffer('Hello Hoang'))
+  drive.publish(config.channel.reqCreateWallet, 'Hello Hoang')
 
   blockchain.subscribeCreateWallet()
-  // blockchain.getBalanceAccount()
-  // drive.subscribe(config.channel.resCreateWallet, (message) => {
-  //   console.log('message', message.content.toString());
-  // })
+  blockchain.updateBalanceAccount()
+  drive.subscribe(config.channel.resCreateWallet, (message) => {
+    console.log('message', message);
+  })
 })
 
 

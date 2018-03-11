@@ -26,7 +26,8 @@ drive.publish = function(queue, message) {
   drive._channel.assertQueue(queue, {
     durable: false,
   })
-  drive._channel.sendToQueue(queue, new Buffer(message))
+
+  drive._channel.sendToQueue(queue, new Buffer(JSON.stringify(message)))
 }
 
 drive.subscribe = function(queue, callback) {
