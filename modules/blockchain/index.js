@@ -9,8 +9,6 @@ import {
 } from 'services/user'
 
 
-const blockchain = {}
-
 async function getBalance(user) {
   let balance = await eth.getBalanceAccount(user.addressEth)
 
@@ -19,7 +17,7 @@ async function getBalance(user) {
   }
 }
 
-blockchain.subscribeCreateWallet = function() {
+export const subscribeCreateWallet = function() {
   drive.subscribe(config.channel.reqCreateWallet, (message) => {
 
     const resData = {
@@ -36,12 +34,10 @@ blockchain.subscribeCreateWallet = function() {
   })
 }
 
-blockchain.updateBalanceAccount = async () => {
+export const updateBalanceAccount = async () => {
   const users = await listUser()
 
   users.forEach((user) => {
     getBalance(user)
   })
 }
-
-export default blockchain
