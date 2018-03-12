@@ -6,13 +6,9 @@ const schema = mongoose.Schema({
     required: true,
     unique: true
   },
-  addressEth: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  balanceEth: {
-    type: String
+  createdDate: {
+    type: Date,
+    required: true
   }
 })
 

@@ -9,25 +9,25 @@ import {
   updateBalanceAccount
 } from 'modules/blockchain'
 
-if (cluster.isMaster) {
-  const numWorkers = os.cpus().length
-  console.log('numWorkers', numWorkers)
+// if (cluster.isMaster) {
+//   const numWorkers = os.cpus().length
+//   console.log('numWorkers', numWorkers)
 
-  for (let i = 0; i < numWorkers; i++) {
-    cluster.fork()
-  }
+//   for (let i = 0; i < numWorkers; i++) {
+//     cluster.fork()
+//   }
 
-  cluster.on('exit', (worker, code, signal) => {
-    console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal)
-    console.log('Starting a new worker')
-    cluster.fork()
-  })
+//   cluster.on('exit', (worker, code, signal) => {
+//     console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal)
+//     console.log('Starting a new worker')
+//     cluster.fork()
+//   })
 
-} else {
+// } else {
   const system = express()
 
   drive.connect().then((ch) => {
-    drive.publish(config.channel.reqCreateWallet, 'Hello Hoang')
+    // drive.publish(config.channel.reqCreateWallet, 'Hello Hoang')
 
     subscribeCreateWallet()
     updateBalanceAccount()
@@ -38,4 +38,4 @@ if (cluster.isMaster) {
 
   system.use(morgan('dev'))
   system.listen(config.serverPort, () => console.log(`Server listen to :${config.serverPort}`))
-}
+// }

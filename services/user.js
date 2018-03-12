@@ -4,24 +4,15 @@ export const list = async () => {
   return await User.find().lean().exec()
 }
 
-export const create = async (userId, addressEth, balanceEth) => {
+export const create = async (userId, createdDate) => {
   return await new User({
     userId,
-    addressEth,
-    balanceEth
+    createdDate
   }).save()
 }
 
 export const findById = async (id) => {
   return await User.findById(id).lean()
-}
-
-export const findByUserId = async (userId) => {
-  return await User.findOne({ userId }).lean()
-}
-
-export const findByAddress = async (addressEth) => {
-  return await User.findOne({ addressEth }).lean()
 }
 
 export const setBalanceEth = async (id, balance) => {

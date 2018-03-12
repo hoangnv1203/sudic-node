@@ -3,41 +3,43 @@ import eth from 'services/eth'
 import config from 'config/config'
 import web3 from 'config/web3'
 import {
-  create as createUser,
-  list as listUser,
-  setBalanceEth
-} from 'services/user'
+  create as createCoin,
+  list as listCoin,
+  setBalance
+} from 'services/coin'
 
+async function getBalance(coin) {
+  let balance = await eth.getBalanceAccount(coin.address)
 
-async function getBalance(user) {
-  let balance = await eth.getBalanceAccount(user.addressEth)
-
-  if (balance > user.balanceEth) {
-    setBalanceEth(user._id, balance)
+  if (balance > coin.balance) {
+    setBalance(coin._id, balance)
   }
 }
 
 export const subscribeCreateWallet = function() {
   drive.subscribe(config.channel.reqCreateWallet, (message) => {
 
-    const resData = {
+    const ethData = {
       userId: 'userId:' + Date.now(),
-      data: {
-        eth: ''
-      },
-      balanceEth: '0'
+      coin: 'ETH',
+      name: 'Ethereum',
+      balance: 0
     }
 
-    resData.data.eth = eth.createAccount()
-    drive.publish(config.channel.resCreateWallet, resData)
-    createUser(resData.userId, resData.data.eth.address, resData.balanceEth)
+    const data = eth.createAccount()
+    ethData.address = data.address
+    ethData.privateKey = data.privateKey
+
+    createCoin(ethData)
+
+    drive.publish(config.channel.resCreateWallet, ethData)
   })
 }
 
 export const updateBalanceAccount = async () => {
-  const users = await listUser()
+  const coins = await listCoin()
 
-  users.forEach((user) => {
-    getBalance(user)
+  coins.forEach((coin) => {
+    getBalance(coin)
   })
 }
