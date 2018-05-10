@@ -18,9 +18,9 @@ async function getBalance(coin) {
 
 export const subscribeCreateWallet = function() {
   drive.subscribe(config.channel.reqCreateWallet, (message) => {
+    const object = JSON.parse(message)
 
     const ethData = {
-      userId: 'userId:' + Date.now(),
       coin: 'ETH',
       name: 'Ethereum',
       balance: 0
@@ -30,9 +30,12 @@ export const subscribeCreateWallet = function() {
     ethData.address = data.address
     ethData.privateKey = data.privateKey
 
-    createCoin(ethData)
+    // createCoin(ethData)
 
-    drive.publish(config.channel.resCreateWallet, ethData)
+    drive.publish(config.channel.resCreateWallet, {
+      userId: object.userId,
+      eth: ethData
+    })
   })
 }
 

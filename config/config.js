@@ -9,10 +9,11 @@ export default config.load({
       resCreateWallet: 'resCreateWallet'
     },
     aws: {
-      region: 'ap-southeast-1',
+      region: 'us-west-2',
       credentials: {
-        accessKeyId: 'AKIAI6ENA23WUQ7VWOXA',
-        secretAccessKey: '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'
+        accessKeyId: 'xxx',
+        secretAccessKey: 'xxx',
+        sourceMailAws: 'xxxx@yy.io'
       }
     }
   }

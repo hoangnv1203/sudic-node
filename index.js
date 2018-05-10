@@ -26,15 +26,16 @@ import {
 // } else {
   const system = express()
 
-  drive.connect().then((ch) => {
-    // drive.publish(config.channel.reqCreateWallet, 'Hello Hoang')
+  // drive.connect().then((ch) => {
+  //   drive.publish(config.channel.reqCreateWallet, 'Hello Hoang')
 
-    subscribeCreateWallet()
-    updateBalanceAccount()
-    drive.subscribe(config.channel.resCreateWallet, (message) => {
-      console.log('message', message);
-    })
-  })
+  //   subscribeCreateWallet()
+  //   updateBalanceAccount()
+
+  //   drive.subscribe(config.channel.resCreateWallet, (message) => {
+  //     console.log('message', message);
+  //   })
+  // })
 
   system.use(morgan('dev'))
   system.listen(config.serverPort, () => console.log(`Server listen to :${config.serverPort}`))
